@@ -1,26 +1,70 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Primary - Deep Blue (#094074) */
+  --primary-dark: #072040;
+  --primary: #094074;
+  --primary-light: #3a90d6;
+
+  /* Secondary - Dark Olive (#25291c) */
+  --secondary-dark: #1e211a;
+  --secondary: #25291c;
+  --secondary-light: #656c4f;
+
+  /* Accent - Soft Purple (#9d8df1) */
+  --accent-dark: #6d5cc2;
+  --accent: #9d8df1;
+  --accent-light: #c1b8f7;
+
+  /* Background - Mint White (#eff9f0) */
+  --background-dark: #c3e5c5;
+  --background: #eff9f0;
+  --background-light: #fafdfb;
+
+  /* Text/Foreground - Cyan (#30f2f2) */
+  --foreground-dark: #0db3b3;
+  --foreground: #30f2f2;
+  --foreground-light: #96f8f8;
 }
 
 @theme inline {
+  /* Primary colors */
+  --color-primary-dark: var(--primary-dark);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+
+  /* Secondary colors */
+  --color-secondary-dark: var(--secondary-dark);
+  --color-secondary: var(--secondary);
+  --color-secondary-light: var(--secondary-light);
+
+  /* Accent colors */
+  --color-accent-dark: var(--accent-dark);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+
+  /* Background colors */
+  --color-background-dark: var(--background-dark);
   --color-background: var(--background);
+  --color-background-light: var(--background-light);
+
+  /* Foreground/Text colors */
+  --color-foreground-dark: var(--foreground-dark);
   --color-foreground: var(--foreground);
+  --color-foreground-light: var(--foreground-light);
+
+  /* Text aliases */
+  --color-text-dark: var(--foreground-dark);
+  --color-text: var(--foreground);
+  --color-text-light: var(--foreground-light);
+
+  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--foreground-dark);
   font-family: Arial, Helvetica, sans-serif;
 }
