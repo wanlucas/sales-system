@@ -3,17 +3,14 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      # Seller authentication routes
-      post 'sellers/login', to: 'sellers#login'
-      post 'sellers/register', to: 'sellers#register'
-      post 'sellers/logout', to: 'sellers#logout'
-      get 'sellers/me', to: 'sellers#me'
-      
-      # Seller CRUD routes
-      resources :sellers, only: [:index, :show, :update, :destroy]
-      
-      # Products CRUD routes
-      resources :products
+      namespace :sellers do
+        post 'login', to: 'auth#login'
+        post 'register', to: 'auth#register'
+        post 'logout', to: 'auth#logout'
+        get 'me', to: 'auth#me'
+        
+        resources :products
+      end
     end
   end
 end
