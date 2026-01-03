@@ -1,13 +1,15 @@
 module Api
   module V1
     class SellersController < ApplicationController
-      skip_before_action :authenticate_request, only: [:login, :register]
+      include SellerAuthentication
+      
+      skip_before_action :authenticate_seller, only: [:login, :register]
 
       def login
         seller = Seller.find_by(email: params[:email]&.downcase)
 
         if seller&.authenticate(params[:password])
-          token = JsonWebToken.encode(seller_id: seller.id)
+          token = JsonWebToken.encode(seller_id: seller.id, type: 'seller')
           
           cookies.signed[:token] = {
             value: token,
@@ -30,7 +32,7 @@ module Api
         seller = Seller.new(seller_data)
 
         if seller.save
-          token = JsonWebToken.encode(seller_id: seller.id)
+          token = JsonWebToken.encode(seller_id: seller.id, type: 'seller')
           
           cookies.signed[:token] = {
             value: token,

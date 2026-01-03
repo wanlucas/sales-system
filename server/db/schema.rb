@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_02_195000) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_03_030832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "seller_id", null: false
+    t.string "title", null: false
+    t.text "description"
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.boolean "is_active", default: true, null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_products_on_deleted_at"
+    t.index ["seller_id", "is_active"], name: "index_products_on_seller_id_and_is_active"
+    t.index ["seller_id"], name: "index_products_on_seller_id"
+  end
 
   create_table "sellers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
@@ -29,4 +43,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_02_195000) do
     t.index ["document"], name: "index_sellers_on_document", unique: true
     t.index ["email"], name: "index_sellers_on_email", unique: true
   end
+
+  add_foreign_key "products", "sellers"
 end

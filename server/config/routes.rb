@@ -11,6 +11,9 @@ Rails.application.routes.draw do
       
       # Seller CRUD routes
       resources :sellers, only: [:index, :show, :update, :destroy]
+      
+      # Products CRUD routes
+      resources :products
     end
   end
 end
