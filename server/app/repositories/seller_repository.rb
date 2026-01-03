@@ -32,7 +32,7 @@ module Repositories
     def to_entity(record)
       return nil unless record
 
-      Domain::Sellers::Seller.new(
+      Domain::Sellers::SellerEntity.new(
         id: record.id,
         name: record.name,
         email: record.email,

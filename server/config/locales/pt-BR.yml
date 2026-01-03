@@ -1,0 +1,43 @@
+pt-BR:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "A validação falhou: %{errors}"
+        restrict_dependent_destroy:
+          has_one: "Não é possível excluir o registro pois existe um(a) %{record} dependente"
+          has_many: "Não é possível excluir o registro pois existem %{record} dependentes"
+      models:
+        seller:
+          attributes:
+            name:
+              blank: "é obrigatório"
+            email:
+              blank: "é obrigatório"
+              taken: "já está em uso"
+              invalid: "não é válido"
+            phone:
+              blank: "é obrigatório"
+            password:
+              blank: "é obrigatório"
+              too_short: "é muito curta (mínimo 6 caracteres)"
+            document:
+              taken: "já está em uso"
+  errors:
+    messages:
+      blank: "não pode ficar em branco"
+      taken: "já está em uso"
+      invalid: "não é válido"
+      too_short: "é muito curta (mínimo %{count} caracteres)"
+      too_long: "é muito longa (máximo %{count} caracteres)"
+      inclusion: "não está incluído na lista"
+      exclusion: "não está disponível"
+      not_a_number: "não é um número"
+      not_an_integer: "deve ser um inteiro"
+      greater_than: "deve ser maior que %{count}"
+      greater_than_or_equal_to: "deve ser maior que ou igual a %{count}"
+      equal_to: "deve ser igual a %{count}"
+      less_than: "deve ser menor que %{count}"
+      less_than_or_equal_to: "deve ser menor que ou igual a %{count}"
+      other_than: "deve ser diferente de %{count}"
+      odd: "deve ser ímpar"
+      even: "deve ser par"

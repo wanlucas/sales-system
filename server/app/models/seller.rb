@@ -6,9 +6,7 @@ class Seller < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, if: :password_required?
 
   before_validation :normalize_email
-  before_save :encrypt_password, if: :password_changed?
-
-  attr_accessor :password_plain
+  before_save :encrypt_password, if: :should_encrypt_password?
 
   scope :active, -> { where(is_active: true) }
   scope :not_deleted, -> { where(deleted_at: nil) }
@@ -31,6 +29,14 @@ class Seller < ApplicationRecord
     deleted_at.present?
   end
 
+  def update(attributes = {})
+    if attributes[:password].present?
+      self.password = BCrypt::Password.create(attributes[:password])
+      attributes = attributes.except(:password)
+    end
+    super(attributes)
+  end
+
   private
 
   def normalize_email
@@ -38,14 +44,14 @@ class Seller < ApplicationRecord
   end
 
   def encrypt_password
-    self.password = BCrypt::Password.create(password_plain || password)
+    self.password = BCrypt::Password.create(password)
   end
 
-  def password_changed?
-    password_plain.present? || (new_record? && password.present?)
+  def should_encrypt_password?
+    new_record? && password.present?
   end
 
   def password_required?
-    new_record? || password_plain.present?
+    new_record?
   end
 end

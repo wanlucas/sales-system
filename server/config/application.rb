@@ -28,6 +28,7 @@ module Server
 
     config.autoload_paths += Dir[Rails.root.join('app', 'domain', '{**}')]
     config.autoload_paths += Dir[Rails.root.join('app', 'services', '{**}')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'serializers', '{**}')]
     config.autoload_paths += Dir[Rails.root.join('app', 'repositories', '{**}')]
     config.autoload_paths += Dir[Rails.root.join('app', 'serializers', '{**}')]
     config.autoload_paths += Dir[Rails.root.join('app', 'exceptions', '{**}')]

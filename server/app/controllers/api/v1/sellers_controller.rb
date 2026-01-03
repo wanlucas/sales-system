@@ -1,6 +1,6 @@
 module Api
   module V1
-    class AuthController < ApplicationController
+    class SellersController < ApplicationController
       skip_before_action :authenticate_request, only: [:login, :register]
 
       def login
@@ -18,17 +18,16 @@ module Api
           }
 
           render json: {
-            message: 'Login successful',
-            seller: Serializers::SellerSerializer.as_json(seller)
+            data: SellerSerializer.as_json(seller)
           }, status: :ok
         else
-          render json: { error: 'Invalid email or password' }, status: :unauthorized
+          render json: { error: 'Email ou senha inválidos' }, status: :unauthorized
         end
       end
 
       def register
-        seller = Seller.new(seller_params)
-        seller.password_plain = params[:password]
+        seller_data = seller_params
+        seller = Seller.new(seller_data)
 
         if seller.save
           token = JsonWebToken.encode(seller_id: seller.id)
@@ -38,33 +37,32 @@ module Api
             httponly: true,
             secure: Rails.env.production?,
             same_site: :lax,
-            expires: 24.hours.from_now
+            expires: 7.days.from_now
           }
 
           render json: {
-            message: 'Registration successful',
-            seller: Serializers::SellerSerializer.as_json(seller)
+            data: SellerSerializer.as_json(seller)
           }, status: :created
         else
-          render json: { errors: seller.errors.full_messages }, status: :unprocessable_entity
+          render json: { error: seller.errors.full_messages.first }, status: :unprocessable_entity
         end
       end
 
       def logout
         cookies.delete(:token)
-        render json: { message: 'Logged out successfully' }, status: :ok
+        render status: :ok
       end
 
       def me
         render json: {
-          seller: Serializers::SellerSerializer.as_json(current_seller)
+          data: SellerSerializer.as_json(current_seller)
         }, status: :ok
       end
 
       private
 
       def seller_params
-        params.permit(:name, :email, :phone, :business_name, :document)
+        params.permit(:name, :email, :phone, :business_name, :document, :password)
       end
     end
   end
